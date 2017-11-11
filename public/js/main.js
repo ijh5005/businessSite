@@ -28,39 +28,13 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', 'navigate', 'animat
   $scope.sendEmail = () => { taskRunner.checkEmailFields() }
   $scope.sendText = () => { taskRunner.checkTextFields() }
   $scope.enter = (e) => { taskRunner.enter(e) }
-  $scope.onScreen = true;
-
-  $(window).focus(() => { $scope.onScreen = true })
-  $(window).blur(() => { $scope.onScreen = false })
 
   navigate.watchForAnimation();
-
-  $(window).scrollTop(0);
-  $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
-  $('.form-view').fadeOut(10).removeClass('opacityZero');
-  const slideshowPlayObject = { target: { className: 'slide-right' }};
-  let playSlide;
-  let playCount = 0;
-  playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
-  // $interval(() => { if(!$scope.onScreen){ $interval.cancel(playSlide) } }, 100);
-  // $interval(() => {
-  //   if($scope.onScreen){
-  //     playCount++;
-  //     if(playCount === 4){
-  //       playCount = 0;
-  //       $interval.cancel(playSlide);
-  //       playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
-  //     }
-  //   }
-  // }, 250);
-  // const slideStartPointer = $interval(() => {
-  //   if($rootScope.auth){
-  //     playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
-  //     $interval.cancel(slideStartPointer);
-  //   }
-  // }, 100);
   taskRunner.functionality();
   taskRunner.trackTopButton();
+
+  const slideshowPlayObject = { target: { className: 'slide-right' }};
+  const playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
 }]);
 
 app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, animate){
@@ -272,6 +246,10 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
     $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
     $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+
+    $(window).scrollTop(0);
+    $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
+    $('.form-view').fadeOut(10).removeClass('opacityZero');
   }
   this.trackTopButton = () => {
     $interval(() => {
