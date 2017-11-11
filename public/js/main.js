@@ -4,7 +4,7 @@ $('textarea').click(() => { $('textarea').removeAttr("style").css('backgroundCol
 
 const app = angular.module('app', []);
 
-app.controller('ctr1', ['$scope', '$rootScope', '$interval', 'navigate', 'animate', 'taskRunner', function($scope, $rootScope, $interval, navigate, animate, taskRunner){
+app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'navigate', 'animate', 'taskRunner', function($scope, $rootScope, $interval, $timeout, navigate, animate, taskRunner){
   $rootScope.sliding = false;
   $rootScope.slideText = 'You\'ve Thought It Up'
   $rootScope.page3navigationTime = 700;
@@ -18,7 +18,6 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', 'navigate', 'animat
     if(!$rootScope.sliding){
       navigate.slideshow(e);
       $interval.cancel(playSlide);
-      playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
     }
   }
   $scope.signUp = () => { animate.signUp() }
@@ -34,7 +33,16 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', 'navigate', 'animat
   taskRunner.trackTopButton();
 
   const slideshowPlayObject = { target: { className: 'slide-right' }};
-  const playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
+
+  const slideFn = () => {
+    let playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
+    $timeout(() => { $interval.cancel(playSlide) }, 7000);
+  }
+
+  slideFn();
+
+  $interval(() => { slideFn() }, 8000);
+
 }]);
 
 app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, animate){
