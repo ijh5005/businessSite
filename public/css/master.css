@@ -787,3 +787,20 @@ grammarly-ghost {
 grammarly-btn {
   display: none;
 }
+
+/*MEDIA QUERY*/
+
+@media (max-height: 700px) {
+  .page1 {
+    height: 100vh;
+  }
+}
+
+@media (max-height: 600px) {
+  .page1 .content {
+    display: none;
+  }
+  .page1 .signup {
+    margin-top: 2em;
+  }
+}

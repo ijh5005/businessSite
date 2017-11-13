@@ -12,6 +12,7 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   $rootScope.signUpPageMessage = '';
   $rootScope.onSignInPage = true;
   $rootScope.onAuthPage = false;
+  $rootScope.loggedIn = false;
   $scope.homeText = "you've thought up a website to serve business needs... you've writen details outlining its content, purpose, and audience... you've done enough... let me build it"
   $scope.navigate = (e) => { navigate.page(e) }
   $scope.slideshow = (e) => {
@@ -35,7 +36,7 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
   const slideFn = () => {
-    if($(window).scrollTop() < 630){
+    if($(window).scrollTop() < 630 && $rootScope.loggedIn){
       let playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
       $timeout(() => { $interval.cancel(playSlide) }, 7000);
     }
@@ -662,6 +663,7 @@ app.service('auth', function($rootScope, $timeout){
     $('.slideText').css('left', '2em');
     $('.slide-show').css('left', '2em');
     $('body').removeClass('noScroll').addClass('noScrollX');
+    $rootScope.loggedIn = true;
 
     $timeout(() => {
       $('.slideText').animate({ left: 0, opacity: 1 }, 500);
