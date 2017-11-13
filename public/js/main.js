@@ -35,8 +35,10 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
   const slideFn = () => {
-    let playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
-    $timeout(() => { $interval.cancel(playSlide) }, 7000);
+    if($(window).scrollTop() < 630){
+      let playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
+      $timeout(() => { $interval.cancel(playSlide) }, 7000);
+    }
   }
 
   slideFn();
@@ -92,7 +94,7 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
     }, 10);
     const startP3Animation = $interval(() => {
       const windowPosition = $(window).scrollTop();
-      if(windowPosition > 800){
+      if(windowPosition > 950){
         animate.page(3);
         $interval.cancel(startP3Animation);
       }
@@ -258,6 +260,32 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     $(window).scrollTop(0);
     $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
     $('.form-view').fadeOut(10).removeClass('opacityZero');
+
+    $('.page2img').fadeOut();
+
+
+    let positionX;
+    let positionY;
+    let pageWidth;
+    let pageHeight;
+
+    $( document ).on( "mousemove", function( event ) {
+      positionX = event.pageX;
+      positionY = event.pageY;
+      pageWidth = $('body').width();
+      pageHeight = $('.homeImg').height();
+    })
+
+    $interval(() => {
+      let zeroX = (positionX < 50);
+      let zeroY = (positionY < 50);
+      let xOver = (positionX > (pageWidth - 50));
+      let yOver = (positionY > (pageHeight - 50));
+
+      if(zeroX || zeroY || xOver || yOver){
+        console.log('offPage');
+      }
+    }, 1000);
   }
   this.trackTopButton = () => {
     $interval(() => {
@@ -326,8 +354,6 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
 
       //second animation
 
-      //let counter = 0;
-
       const feed = (target) => {
         $('.ballStream').prepend('<div class="' + target + '"></div>');
         $('.' + target).animate({
@@ -352,7 +378,7 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
 
       $rootScope.money = '$100';
 
-      const dropPrice = () => {
+      let dropPrice = () => {
         $('.money p').addClass('tooMuch');
         $('.dropZero').addClass('tooMuch');
         $timeout(() => {
@@ -374,7 +400,7 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
         }, 1000);
       }
 
-      $timeout(() => {
+      const moneyDrop = $timeout(() => {
         $('.money p').addClass('tooMuch');
         $('.dropZero').addClass('tooMuch');
         $('.money').animate({ opacity: 1 }, {
@@ -384,6 +410,33 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
           }
         });
       }, 7500);
+
+      //stop animations
+
+      $timeout(() => {
+        $('.deviceParent').fadeOut();
+      }, 6800);
+
+      $timeout(() => {
+        $interval.cancel(centerDeviceChanger);
+        $('.deviceHolder').removeClass('spinner');
+        $('.deviceSpin').removeClass('spinnerReverse');
+      }, 7200);
+
+      $timeout(function () {
+        $('.money').fadeOut();
+        dropPrice = () => { return null }
+      }, 13000);
+
+      $timeout(function () {
+        $('.ballStream').fadeOut();
+        $('.pacman').fadeOut();
+      }, 15000);
+
+      $timeout(() => {
+        $('.page2bottomChild').hide();
+        $('.page2img').fadeIn();
+      }, 16000);
 
     } else if (page === 3) {
       $('.basic').animate({ left: 0, opacity: 1 }, 500);

@@ -356,6 +356,13 @@ textarea {
   height: 60%;
 }
 
+.page2img {
+  background-image: url(../images/start.jpg);
+  background-size: 100% 100%;
+  height: 100%;
+  width: 100%;
+}
+
 .basic,
 .custom {
   left: -5em;
@@ -558,11 +565,11 @@ html body .container .page4 form textarea {
 /*///////*/
 
 .spinner {
-  animation: spin 100s linear infinite;
+  animation: spin 6s linear infinite;
 }
 
 .spinnerReverse {
-  animation: spinr 100s linear infinite;
+  animation: spinr 6s linear infinite;
 }
 
 @keyframes spin {
