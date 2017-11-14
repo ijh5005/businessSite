@@ -14,6 +14,11 @@
         <img src="./images/homeImg.png" alt="">
       </div>
       <div class="flex nav-circle four" ng-click='navigate($event)'><p class="four">&#x21ea;</p></div>
+      <div class="flex nav-circle five" ng-click='navigate($event)'><p>&#x263B;</p></div>
+      <div class="flex nav-circle six">
+        <div class="flex pointer logout" ng-click='navigate($event)'><p>log out</p></div>
+        <div class="flex pointer delete" ng-click='navigate($event)'><p>delete account</p></div>
+      </div>
       <div class="flex page1">
         <div class="flex page1left">
           <div class="flex navigation opacityZero">
@@ -22,7 +27,7 @@
             <div class="flex nav-circle three" ng-click='navigate($event)'>contacting</div>
           </div>
           <div class="flex heading">
-            <p>Let's build your website</p>
+            <p>Let's build your website {{user_firstname}}</p>
           </div>
           <div class="flex content">
             <p>{{homeText}}</p>
@@ -225,10 +230,13 @@
         <div class="sendingMethod"></div>
       </div>
 
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
-      <script src="./js/main.js" type="text/javascript"></script>
-
     </div>
+
+    <div class="pogoutScreen flex"><p>Logged Out</p></div>
+    <div class="deleteScreen flex"><p>Account Deleted</p></div>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+    <script src="./js/main.js" type="text/javascript"></script>
   </body>
 </html>

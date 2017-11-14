@@ -13,12 +13,14 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   $rootScope.onSignInPage = true;
   $rootScope.onAuthPage = false;
   $rootScope.loggedIn = false;
+  $rootScope.slideNotStarted = true;
+  $rootScope.profileOpen = false;
   $scope.homeText = "you've thought up a website to serve business needs... you've writen details outlining its content, purpose, and audience... you've done enough... let me build it"
   $scope.navigate = (e) => { navigate.page(e) }
   $scope.slideshow = (e) => {
     if(!$rootScope.sliding){
       navigate.slideshow(e);
-      $interval.cancel(playSlide);
+      //$interval.cancel(playSlide);
     }
   }
   $scope.signUp = () => { animate.signUp() }
@@ -35,30 +37,54 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
 
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
-  const slideFn = () => {
-    if($(window).scrollTop() < 630 && $rootScope.loggedIn){
-      let playSlide = $interval(() => { navigate.slideshow(slideshowPlayObject) }, 6000);
-      $timeout(() => { $interval.cancel(playSlide) }, 7000);
-    }
+  const startSlider = () => {
+    $timeout(() => {
+      navigate.slideshow(slideshowPlayObject);
+      startSlider();
+    }, 6000);
   }
 
-  slideFn();
-
-  $interval(() => { slideFn() }, 8000);
+  const startSlideFn = $interval(() => {
+    if($rootScope.loggedIn){
+      startSlider();
+      $interval.cancel(startSlideFn);
+    }
+  }, 250);
 
 }]);
 
-app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, animate){
+app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, animate, server){
   this.page = (e) => {
-    const className = e.target.className;
+    const className = e.currentTarget.className;
     const toSecondPage = className.includes('one');
     const toThirdPage = className.includes('two');
     const toFourthPage = className.includes('three');
     const toFirstPage = className.includes('four');
+    const toProfile = className.includes('five');
+    const toLogout = className.includes("logout");
+    const toDelete = className.includes("delete");
     if(toSecondPage){ $("html, body").animate({ scrollTop: "680px" }) }
     else if(toThirdPage){ $("html, body").animate({ scrollTop: "1480px" }, $rootScope.page3navigationTime) }
     else if(toFourthPage){ $("html, body").animate({ scrollTop: "2146px" }, $rootScope.page4navigationTime) }
+    else if (toProfile) {
+      if(!$rootScope.profileOpen){ animate.fadeInFromLeftWithPosition('nav-circle.six', 250, '90vw') }
+      else { animate.fadeOutToLeftWithPosition('nav-circle.six', 250, '88vw') }
+    }
     else if(toFirstPage){ $("html, body").animate({ scrollTop: "0px" }) }
+    else if(toLogout){
+      if($rootScope.profileOpen){
+        $(".container").fadeOut();
+        $timeout(() => { $('.pogoutScreen').fadeIn() }, 1000);
+      }
+    }
+    else if(toDelete){
+      if($rootScope.profileOpen){
+        const url = "http://localhost:3000/deleteaccount";
+        server.delete($rootScope._id, url);
+        $(".container").fadeOut();
+        $timeout(() => { $('.deleteScreen').fadeIn() }, 1000);
+      }
+    }
   }
   this.slideshow = (e) => {
     const isRightSlideButton = e.target.className.includes('slide-right');
@@ -264,29 +290,19 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
 
     $('.page2img').fadeOut();
 
+    $(".pogoutScreen").fadeOut();
+    $(".deleteScreen").fadeOut();
 
-    let positionX;
-    let positionY;
-    let pageWidth;
-    let pageHeight;
-
-    $( document ).on( "mousemove", function( event ) {
-      positionX = event.pageX;
-      positionY = event.pageY;
-      pageWidth = $('body').width();
-      pageHeight = $('.homeImg').height();
-    })
-
-    $interval(() => {
-      let zeroX = (positionX < 50);
-      let zeroY = (positionY < 50);
-      let xOver = (positionX > (pageWidth - 50));
-      let yOver = (positionY > (pageHeight - 50));
-
-      if(zeroX || zeroY || xOver || yOver){
-        console.log('offPage');
+    $('.delete').mouseover(() => {
+      if($rootScope.profileOpen){
+        $('.five p').html('&#x2639;');
       }
-    }, 1000);
+    });
+
+    $('.delete').mouseout(() => {
+      $('.five p').html('&#x263B;');
+    });
+
   }
   this.trackTopButton = () => {
     $interval(() => {
@@ -300,6 +316,14 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
 app.service('animate', function($rootScope, $interval, $timeout, server){
   this.fadeInFromLeft = (selector, time) => {
     $('.' + selector).animate({ left: 0, opacity: 1 }, time);
+  }
+  this.fadeInFromLeftWithPosition = (selector, time, position) => {
+    $('.' + selector).animate({ left: position, opacity: 1 }, time);
+    $rootScope.profileOpen = true;
+  }
+  this.fadeOutToLeftWithPosition = (selector, time, position) => {
+    $('.' + selector).animate({ left: position, opacity: 0 }, time);
+    $rootScope.profileOpen = false;
   }
   this.fadeInFromRight = (selector, time) => {
     $('.' + selector).animate({ left: 0, opacity: 1 }, time);
@@ -513,6 +537,7 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
       );
 
     const successCallback = (success) => {
+      console.log(success);
       console.log("successfully logged in");
       $('.signUpPageMessage').hide();
       auth.logIn();
@@ -543,7 +568,7 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
         (error) => { errorCallback(error.data) }
       );
 
-    const successCallback = () => {
+    const successCallback = (success) => {
       $rootScope.onAuthPage = true;
       $rootScope.onSignInPage = true;
       $('.signUpPageMessage').css('color', '#fbfbfb');
@@ -562,6 +587,26 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
       $('.signUpPageMessage').css('color', '#e75454');
       $('.signUpPageMessage').fadeIn();
       $rootScope.signUpPageMessage = "User name taken. Sorry...";
+    }
+  }
+  this.delete = (_id, url) => {debugger
+    const data = { id: _id }
+
+    $http({
+      method: 'DELETE',
+      url: url,
+      data: JSON.stringify(data)
+    }).then(
+        (success) => { successCallback(success) },
+        (error) => { errorCallback(error.data) }
+      );
+
+    const successCallback = (success) => {
+      console.log('account deleted');
+    }
+
+    const errorCallback = () => {
+      console.log('error deleting account');
     }
   }
   this.email = (name, email, subject, message, url) => {
@@ -649,6 +694,8 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
   this.setUserInfo = (userObj) => {
     $rootScope.user_firstname = userObj.data.firstname;
     $rootScope.user_lastname = userObj.data.lastname;
+    $rootScope.user_name = userObj.data.username;
+    $rootScope._id = userObj.data._id;
   };
 });
 
@@ -672,6 +719,7 @@ app.service('auth', function($rootScope, $timeout){
     $timeout(() => {
       $('.page2').animate({ top: 0 }, 500);
       $('.navigation').hide().removeClass('opacityZero').fadeIn(1000);
+      $('.nav-circle.five').css('opacity', 1);
     }, 1000);
   }
   this.signIn = () => {

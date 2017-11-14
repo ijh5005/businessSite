@@ -1,5 +1,6 @@
 body, html {
   background-color: #222;
+  font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
 }
@@ -7,7 +8,6 @@ body, html {
 .container {
   background-color: #222;
   flex-direction: column;
-  font-family: 'Roboto', sans-serif;
   width: 100vw;
 }
 
@@ -268,10 +268,67 @@ textarea {
   font-size: 1.8em;
 }
 
+.nav-circle.five {
+  border-radius: 50%;
+  height: 2em;
+  left: 90vw;
+  opacity: 0;
+  position: fixed;
+  top: 2em;
+  transition: opcaity 0.5s;
+  width: 2em;
+}
+
+.nav-circle.five p {
+  font-size: 2em;
+}
+
+.nav-circle.six {
+  align-items: flex-start;
+  border-radius: 0;
+  flex-direction: column;
+  height: 5em;
+  left: 90vw;
+  left: 88vw;
+  line-height: 2;
+  opacity: 0;
+  position: fixed;
+  top: 4em;
+  width: 8em;
+}
+
+.nav-circle.six div {
+  height: 50%;
+  justify-content: flex-start;
+  width: 100%;
+}
+
+.nav-circle.six div:hover {
+  background-color: #111;
+}
+
+.nav-circle.six div p {
+  margin-left: 1em;
+}
+
+.pogoutScreen,
+.deleteScreen {
+  background-color: #222;
+  color: #fff;
+  font-size: 5em;
+  font-weight: 900;
+  height: 100vh;
+  width: 100vw;
+}
+
 .nav-circle:hover,
 .slide-left:hover,
 .slide-right:hover {
   background-color: #111;
+}
+
+.nav-circle.six:hover {
+  background-color: #444;
 }
 
 .slide-show {

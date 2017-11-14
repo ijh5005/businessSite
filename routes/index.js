@@ -58,6 +58,18 @@ router.get('/logout', (req, res, next) => {
   return res.status(200).send();
 });
 
+router.delete('/deleteaccount', (req, res, next) => {
+  const id = req.body.id;
+  user.findOneAndDelete({_id: id}, (err) => {
+    if(err){
+      console.log(err);
+      console.log(id);
+      return res.status(500).send();
+    }
+    return res.status(200).send();
+  });
+});
+
 router.post('/register', (req, res, next) => {
   //cache profile information
   const username = req.body.username;
