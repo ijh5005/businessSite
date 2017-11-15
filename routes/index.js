@@ -60,7 +60,7 @@ router.get('/logout', (req, res, next) => {
 
 router.delete('/deleteaccount', (req, res, next) => {
   const id = req.body.id;
-  user.findOneAndDelete({_id: id}, (err) => {
+  user.findByIdAndRemove({_id: id}, (err) => {
     if(err){
       console.log(err);
       console.log(id);

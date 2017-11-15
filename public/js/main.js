@@ -38,12 +38,18 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
   const startSlider = () => {
-    $timeout(() => {
-      navigate.slideshow(slideshowPlayObject);
-      startSlider();
-    }, 6000);
+    if(slideNumber === 12){
+      return null
+    } else {
+      slideNumber++
+      $timeout(() => {
+        navigate.slideshow(slideshowPlayObject);
+        startSlider();
+      }, 6000);
+    }
   }
 
+  let slideNumber = 0;
   const startSlideFn = $interval(() => {
     if($rootScope.loggedIn){
       startSlider();
@@ -530,7 +536,8 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     $http({
       method: 'POST',
       url: url,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
     }).then(
         (success) => { successCallback(success) },
         (error) => { errorCallback(error.data) }
@@ -562,7 +569,8 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     $http({
       method: 'POST',
       url: url,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
     }).then(
         (success) => { successCallback(success) },
         (error) => { errorCallback(error.data) }
@@ -589,13 +597,17 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
       $rootScope.signUpPageMessage = "User name taken. Sorry...";
     }
   }
-  this.delete = (_id, url) => {debugger
-    const data = { id: _id }
+  this.delete = (id, url) => {
+
+    const data = {
+      id: id
+    }
 
     $http({
       method: 'DELETE',
       url: url,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
     }).then(
         (success) => { successCallback(success) },
         (error) => { errorCallback(error.data) }
@@ -620,7 +632,8 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     $http({
       method: 'POST',
       url: url,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
     }).then(
         (success) => { successCallback(success) },
         (error) => { errorCallback(error.data) }
@@ -659,7 +672,8 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     $http({
       method: 'POST',
       url: url,
-      data: JSON.stringify(data)
+      data: JSON.stringify(data),
+      headers: { 'Content-Type': 'application/json' }
     }).then(
         (success) => { successCallback(success) },
         (error) => { errorCallback(error.data) }
@@ -717,14 +731,18 @@ app.service('auth', function($rootScope, $timeout){
       $('.slide-show').animate({ left: 0, opacity: 1 }, 500);
     }, 500);
     $timeout(() => {
-      $('.page2').animate({ top: 0 }, 500);
-      $('.navigation').hide().removeClass('opacityZero').fadeIn(1000);
+      $('.page2').animate({ top: 0 }, 500);console.log(window.innerWidth);
+      if(window.innerWidth > 1310){
+        $('.navigation').hide().removeClass('opacityZero').fadeIn(1000);
+      } else {
+        $('.navigation').hide().css("display", "").addClass('none').removeClass('opacityZero');
+      }
       $('.nav-circle.five').css('opacity', 1);
     }, 1000);
   }
   this.signIn = () => {
     $('input').val('');
-    $('.signup-view').fadeOut();
+    $('.signup').fadeOut();
     $('#firstname').addClass('none');
     $('#lastname').addClass('none');
     $('.page1 form').removeClass('signUpForm');
