@@ -38,7 +38,7 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
   const startSlider = () => {
-    if(slideNumber === 12){
+    if(slideNumber === 3){
       return null
     } else {
       slideNumber++
@@ -446,13 +446,13 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
 
       $timeout(() => {
         $('.deviceParent').fadeOut();
-      }, 6800);
+      }, 7400);
 
       $timeout(() => {
         $interval.cancel(centerDeviceChanger);
         $('.deviceHolder').removeClass('spinner');
         $('.deviceSpin').removeClass('spinnerReverse');
-      }, 7200);
+      }, 7800);
 
       $timeout(function () {
         $('.money').fadeOut();
@@ -742,7 +742,7 @@ app.service('auth', function($rootScope, $timeout){
   }
   this.signIn = () => {
     $('input').val('');
-    $('.signup').fadeOut();
+    //$('.signup').fadeOut();
     $('#firstname').addClass('none');
     $('#lastname').addClass('none');
     $('.page1 form').removeClass('signUpForm');
