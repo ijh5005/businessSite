@@ -291,6 +291,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     //const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
     // $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
     // $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+    $("html, body").animate({ scrollTop: "0px" });
     $('.emailbtn p').fadeOut();
     $('.textbtn p').fadeOut();
     const highlight = (selector) => { $(selector).css('backgroundColor', '#0A0505') }
