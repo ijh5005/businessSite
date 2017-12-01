@@ -28,9 +28,13 @@ body, html {
   justify-content: center;
 }
 
+.higher {
+  z-index: 2;
+}
+
 .float {
-  -webkit-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
   box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
 }
 
@@ -96,6 +100,7 @@ textarea {
 }
 
 .page4bottom {
+  background-color: #000;
   height: 20vh;
 }
 
@@ -328,9 +333,10 @@ textarea {
   margin-left: 1em;
 }
 
-.pogoutScreen,
+.logoutScreen,
 .deleteScreen {
   background-color: #222;
+  background-image: url('../images/ios-linen.png');
   color: #fff;
   font-size: 5em;
   font-weight: 900;
@@ -416,6 +422,17 @@ textarea {
 
 .page2top {
   height: 40%;
+  position: relative;
+}
+
+.pinkbackground {
+  background-color: #ec7979;
+  height: 100%;
+  left: 0;
+  opacity: 0.05;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .page2top2,
@@ -528,7 +545,57 @@ ul li {
 .page4 {
   /*background-color: #f6f6f6;*/
   flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
 }
+
+.page4top {
+
+}
+
+.page4leftside,
+.page4middle,
+.page4rightside {
+  flex-wrap: wrap;
+  height: 100%;
+}
+
+.page4leftside {
+  width: 30%;
+}
+
+.page4middle {
+  width: 40%;
+}
+
+.page4rightside {
+  align-items: flex-start;
+  height: 60%;
+  width: 30%;
+}
+
+.floatBtn {
+  -moz-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  box-shadow: 0px 32px 29px -20px rgba(0,0,0,0.75);
+  /*box-shadow: 0px 32px 11px -20px rgba(0,0,0,0.75);*/
+}
+
+.emailbtn,
+.textbtn {
+  background-color: #111;
+  color: #ec7979;
+  font-size: 2em;
+  height: 50%;
+  width: 100%;
+}
+
+.topPage4 {
+  height: 32%;
+  margin: 0 !important;
+  width: 100%;
+}
+
 
 .contactHeading {
   margin-bottom: 2em;
@@ -550,7 +617,7 @@ ul li {
   background-color: #222;
   background-color: #111;
   border: none;
-  border-radius: 0.2em;
+  /*border-radius: 0.2em;*/
   color: #fff;
   font-size: 1.4em;
   line-height: 1.4;
@@ -560,12 +627,21 @@ ul li {
   width: 100%;
 }
 
+.page4 form input {
+  color: #ec7979;
+  margin: 0;
+}
+
 html body .container .page4 form textarea {
   background-color: #f6f6f6;
   border: 2px solid #222;
   color: #222;
   height: 4em;
   transition: background-color 0.5s ease;
+}
+
+.forms {
+  flex-wrap: wrap;
 }
 
 .form-head,

@@ -80,7 +80,8 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
     else if(toLogout){
       if($rootScope.profileOpen){
         $(".container").fadeOut();
-        $timeout(() => { $('.pogoutScreen').fadeIn() }, 1000);
+        $('.deleteScreen').fadeOut();
+        $timeout(() => { $('.logoutScreen').fadeIn() }, 1000);
       }
     }
     else if(toDelete){
@@ -88,6 +89,7 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
         const url = "http://localhost:3000/deleteaccount";
         server.delete($rootScope._id, url);
         $(".container").fadeOut();
+        $('.logoutScreen').fadeOut();
         $timeout(() => { $('.deleteScreen').fadeIn() }, 1000);
       }
     }
@@ -286,9 +288,17 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.functionality = () => {
-    const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
-    $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
-    $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+    //const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
+    // $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
+    // $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+    $('.emailbtn p').fadeOut();
+    $('.textbtn p').fadeOut();
+    const highlight = (selector) => { $(selector).css('backgroundColor', '#0A0505') }
+    $('.emailSender').mouseover(() => { highlight('.emailbtn') });
+    $('.textSender').mouseover(() => { highlight('.textbtn') });
+    const undohighlight = (selector) => { $(selector).css('backgroundColor', '#111') }
+    $('.emailSender').mouseleave(() => { undohighlight('.emailbtn') });
+    $('.textSender').mouseleave(() => { undohighlight('.textbtn') });
 
     $(window).scrollTop(0);
     $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
@@ -296,7 +306,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
 
     $('.page2img').fadeOut();
 
-    $(".pogoutScreen").fadeOut();
+    $(".logoutScreen").fadeOut();
     $(".deleteScreen").fadeOut();
 
     $('.delete').mouseover(() => {
@@ -476,6 +486,8 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
       $('.contactHeading').animate({ opacity: 1 });
       $('.send-btn').css('transform', 'rotateY(0deg)');
       $('.send-text-btn').css('transform', 'rotateY(0deg)');
+      $('.emailbtn p').fadeIn();
+      $('.textbtn p').fadeIn();
     }
   }
   this.signUp = () => {

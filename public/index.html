@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Roboto:100,300|Montserrat:900" rel="stylesheet">
     <link rel="icon" type="image/png" href="./favicon.png">
   </head>
-  <body ng-app='app' ng-controller='ctr1' ng-keypress='enter($event)' class="noScroll">
+  <body ng-app='app' ng-controller='ctr1' ng-keypress='enter($event)' class="noScroll" ng-cloak>
 
     <div class="backgroundImg"></div>
 
@@ -88,15 +88,16 @@
 
       <div class="flex page2 outOfViewBottom">
         <div class="flex page2top">
-          <div class="flex top-content page2top1">
+          <div class="pinkbackground"></div>
+          <div class="flex top-content page2top1 higher">
             <h1 class="flex top-content-head">MULTI-DEVICE</h1>
             <p>Your website will look great on all devices: Desktop, Laptop, Tablet, and even TV.</p>
           </div>
-          <div class="flex top-content page2top2">
+          <div class="flex top-content page2top2 higher">
             <h1 class="flex top-content-head">INTEGRATION</h1>
             <p>We can always add more features later. No pressure to get it all at once.</p>
           </div>
-          <div class="flex top-content page2top3">
+          <div class="flex top-content page2top3 higher">
             <h1 class="flex top-content-head">INEXPENSIVE</h1>
             <p>Websites can cost thousands. No fear, I'm here, with affordable prices</p>
           </div>
@@ -196,7 +197,57 @@
       </div>
 
       <div class="flex page4">
-        <div class="flex form-head">
+
+        <div class="pinkbackground"></div>
+        <div class="page4leftside flex higher">
+          <div class="emailbtn flex pointer">
+            <p>EMAIL ME</p>
+          </div>
+          <div class="textbtn flex pointer">
+            <p>TEXT ME</p>
+          </div>
+        </div>
+
+        <div class="page4middle flex higher">
+
+          <div class="flex forms">
+            <form class="emailSender" action="" method="">
+              <input id="userName" type="text" name="" value="" placeholder="your name">
+              <input id="userEmail" type="text" name="" value="" placeholder="your email">
+              <input id="userSubject" type="text" name="" value="" placeholder="subject">
+              <textarea id="userMessage" name="name" rows="8" cols="80" placeholder="your message"></textarea>
+              <div class="flex pointer send-btn" ng-click='sendEmail()'>
+                <p>send</p>
+              </div>
+            </form>
+            <form class="textSender" action="" method="">
+              <input id="userNameText" type="text" name="" value="" placeholder="your name">
+              <input id="userNumberText" type="text" name="" value="" placeholder="text number">
+              <input id="userSubjectText" type="text" name="" value="" placeholder="subject">
+              <textarea id="userMessageText" name="name" rows="8" cols="80" placeholder="your message"></textarea>
+              <div class="flex pointer send-text-btn" ng-click='sendText()'>
+                <p>send</p>
+              </div>
+            </form>
+          </div>
+
+        </div>
+
+        <div class="page4rightside flex higher">
+          <div class="flex top-content page2top1 contactHeading topPage4">
+            <h1 class="flex top-content-head">EMAIL CUSTOMERS</h1>
+            <p>Checkout the email form on the left.</p>
+            <p>You could send emails with this week's sales with this feature.</p>
+          </div>
+          <div class="flex top-content page2top1 contactHeading topPage4">
+            <h1 class="flex top-content-head">TEXT CUSTOMERS</h1>
+            <p>Checkout the text form on the left.</p>
+            <p>You could text appointment reminders with this feature.</p>
+          </div>
+        </div>
+
+
+        <!-- <div class="flex form-head">
           <div class="flex top-content page2top1 contactHeading">
             <h1 class="flex top-content-head">EMAIL CUSTOMERS</h1>
             <p>Send emails with this week's sales</p>
@@ -205,8 +256,8 @@
             <h1 class="flex top-content-head">TEXT CUSTOMERS</h1>
             <p>Text appointment reminders</p>
           </div>
-        </div>
-        <div class="flex forms">
+        </div> -->
+        <!-- <div class="flex forms">
           <form class="emailSender" action="" method="">
             <input id="userName" type="text" name="" value="" placeholder="your name">
             <input id="userEmail" type="text" name="" value="" placeholder="your email">
@@ -225,17 +276,24 @@
               <p>send</p>
             </div>
           </form>
-        </div>
+        </div> -->
+
+
+
       </div>
+
+
+
+
       <div class="flex page4bottom">
         <!-- <div class="emailImg"></div>
         <div class="textImg"></div> -->
-        <div class="sendingMethod"></div>
+        <!-- <div class="sendingMethod"></div> -->
       </div>
 
     </div>
 
-    <div class="pogoutScreen flex"><p>Logged Out</p></div>
+    <div class="logoutScreen flex"><p>Logged Out</p></div>
     <div class="deleteScreen flex"><p>Account Deleted</p></div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
