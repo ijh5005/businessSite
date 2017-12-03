@@ -85,7 +85,7 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
     }
     else if(toDelete){
       if($rootScope.profileOpen){
-        const url = "http://localhost:3000/deleteaccount";
+        const url = "https://localhost:3000/deleteaccount";
         server.delete($rootScope._id, url);
         $(".container").fadeOut();
         $timeout(() => { $('.deleteScreen').fadeIn() }, 1000);
@@ -210,7 +210,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.checkEmailFields = () => {
-    const url = "http://localhost:3000/email";
+    const url = "https://localhost:3000/email";
     const userName = $('#userName').val();
     const userEmail = $('#userEmail').val();
     const userSubject = $('#userSubject').val();
@@ -237,7 +237,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.checkTextFields = () => {
-    const url = "http://localhost:3000/text";
+    const url = "https://localhost:3000/text";
     const userName = $('#userNameText').val();
     const userNumber = $('#userNumberText').val();
     const userMessage = $('#userMessageText').val();
@@ -274,12 +274,12 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     if($rootScope.onAuthPage && enterPressed){
       if($rootScope.onSignInPage){
         if(usernameNotEmpty && passwordNotEmpty){
-          const url = "http://localhost:3000/login";
+          const url = "https://localhost:3000/login";
           server.loginRequest(username, password, url);
         }
       } else {
         if(firstnameNotEmpty && lastnameNotEmpty && usernameNotEmpty && passwordNotEmpty){
-          const url = "http://localhost:3000/register";
+          const url = "https://localhost:3000/register";
           server.register(username, password, firstname, lastname, url);
         }
       }
@@ -511,14 +511,14 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
   this.signUpEnterBtn = () => {
     const isSignUp  = $('.page1 form').hasClass('signUpForm');
     if(isSignUp){
-      const url = "http://localhost:3000/register";
+      const url = "https://localhost:3000/register";
       const firstname = $('#firstname').val();
       const lastname = $('#lastname').val();
       const username = $('#username').val();
       const password = $('#password').val();
       server.register(username, password, firstname, lastname, url);
     } else {
-      const url = "http://localhost:3000/login";
+      const url = "https://localhost:3000/login";
       const username = $('#username').val();
       const password = $('#password').val();
       server.loginRequest(username, password, url);
