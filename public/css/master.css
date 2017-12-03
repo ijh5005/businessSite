@@ -288,6 +288,19 @@ textarea {
   width: 3em;
 }
 
+.side-nav-circles {
+  flex-direction: column;
+  height: 14em;
+  justify-content: space-around;
+  left: 2em;
+  margin: 0 0.5em;
+  opacity: 0;
+  position: fixed;
+  top: 7em;
+  transition: opacity 0.5s;
+  width: 3em;
+}
+
 .nav-circle.four p {
   font-size: 1.8em;
 }
@@ -333,6 +346,32 @@ textarea {
 
 .nav-circle.six div p {
   margin-left: 1em;
+}
+
+.nav-circles.one {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles.two {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles.three {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles p {
+  font-size: 1.2em;
+}
+
+.sideHighlight {
+  background-color: #111;
 }
 
 .logoutScreen,
@@ -576,8 +615,8 @@ ul li {
 .page4rightside {
   align-items: flex-start;
   height: 60%;
-  width: 30%;
   left: 30%;
+  width: 30%;
 }
 
 .floatBtn {

@@ -16,8 +16,15 @@
       <div class="homeImg">
         <img src="./images/homeImg.png" alt="">
       </div>
+
       <div class="flex nav-circle four" ng-click='navigate($event)'><p class="four">&#x21ea;</p></div>
+      <div class="side-nav-circles flex">
+        <div class="flex nav-circle one nav-circles" ng-click='navigate($event)'><p>&#x2605;</p></div>
+        <div class="flex nav-circle two nav-circles" ng-click='navigate($event)'><p>&#xFF04;</p></div>
+        <div class="flex nav-circle three nav-circles" ng-click='navigate($event)'><p>&#x260E;</p></div>
+      </div>
       <div class="flex nav-circle five" ng-click='navigate($event)'><p>&#x263B;</p></div>
+
       <div class="flex nav-circle six">
         <div class="flex pointer logout" ng-click='navigate($event)'><p>log out</p></div>
         <div class="flex pointer delete" ng-click='navigate($event)'><p>delete account</p></div>

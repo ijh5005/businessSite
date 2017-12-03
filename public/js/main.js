@@ -324,9 +324,25 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
   this.trackTopButton = () => {
     $interval(() => {
       let pagePosition = $(window).scrollTop();
-      if (pagePosition > 640) { $('.nav-circle.four').css('opacity', 1) }
-      else { $('.nav-circle.four').css('opacity', 0) }
-    }, 500);
+      if (pagePosition > 640) {
+        $('.nav-circle.four').css('opacity', 1);
+        $('.side-nav-circles').css('opacity', 1);
+      } else {
+        $('.nav-circle.four').css('opacity', 0);
+        $('.side-nav-circles').css('opacity', 0);
+      }
+
+      if (pagePosition > 2000) {
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.three').addClass('sideHighlight');
+      } else if (pagePosition > 1000){
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.two').addClass('sideHighlight');
+      } else if (pagePosition > 0){
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.one').addClass('sideHighlight');
+      }
+    });
   }
 });
 
