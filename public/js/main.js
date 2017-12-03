@@ -294,12 +294,12 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     $("html, body").animate({ scrollTop: "0px" });
     $('.emailbtn p').fadeOut();
     $('.textbtn p').fadeOut();
-    const highlight = (selector) => { $(selector).css('backgroundColor', '#0A0505') }
-    $('.emailSender').mouseover(() => { highlight('.emailbtn') });
-    $('.textSender').mouseover(() => { highlight('.textbtn') });
-    const undohighlight = (selector) => { $(selector).css('backgroundColor', '#111') }
-    $('.emailSender').mouseleave(() => { undohighlight('.emailbtn') });
-    $('.textSender').mouseleave(() => { undohighlight('.textbtn') });
+    const highlight = (selector) => { $(selector).removeClass('opacityZero'); }
+    $('.emailSender').mouseover(() => { highlight('.emailbtn h1') });
+    $('.textSender').mouseover(() => { highlight('.textbtn h1') });
+    const undohighlight = (selector) => { $(selector).addClass('opacityZero'); }
+    $('.emailSender').mouseleave(() => { undohighlight('.emailbtn h1') });
+    $('.textSender').mouseleave(() => { undohighlight('.textbtn h1') });
 
     $(window).scrollTop(0);
     $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
@@ -484,11 +484,22 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
       $('.basic').animate({ left: 0, opacity: 1 }, 500);
       $('.custom').animate({ left: 0, opacity: 1 }, 500);
     } else if (page === 4) {
-      $('.contactHeading').animate({ opacity: 1 });
-      $('.send-btn').css('transform', 'rotateY(0deg)');
-      $('.send-text-btn').css('transform', 'rotateY(0deg)');
-      $('.emailbtn p').fadeIn();
-      $('.textbtn p').fadeIn();
+      $('.page4leftside').animate({ left: '0%' }, {
+        duration: 400,
+        start: () => {
+          $('.page4rightside').animate({ left: '0%' });
+        }
+      });
+      $timeout(() => {
+        $('.page4middle').animate({ opacity: 1 }, 400);
+      }, 800),
+      $timeout(() => {
+        $('.contactHeading').animate({ opacity: 1 });
+        $('.send-btn').css('transform', 'rotateY(0deg)');
+        $('.send-text-btn').css('transform', 'rotateY(0deg)');
+        $('.emailbtn p').fadeIn();
+        $('.textbtn p').fadeIn();
+      }, 400);
     }
   }
   this.signUp = () => {
@@ -635,11 +646,13 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     }
   }
   this.email = (name, email, subject, message, url) => {
+    const sendMessage = 'contact: ' + email + ' message: ' + message;
+
     const data = {
       name: name,
-      email: email,
+      email: 'letsbuildyourwebsite@outlook.com',
       subject: subject,
-      message: message
+      message: sendMessage
     }
 
     $http({
@@ -676,10 +689,12 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     }
   }
   this.text = (userName, userNumber, userMessage, url) => {
+    const sendMessage = 'contact: ' + userNumber + ' message: ' + userMessage;
+
     const data = {
       userName: userName,
-      userNumber: userNumber,
-      userMessage: userMessage,
+      userNumber: '8147530157',
+      userMessage: sendMessage,
     }
 
     $http({
