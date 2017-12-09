@@ -86,7 +86,7 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
     }
     else if(toDelete){
       if($rootScope.profileOpen){
-        const url = "https://letsbuildyourwebsite.herokuapp.com:3000/deleteaccount";
+        const url = "https://letsbuildyourwebsite.herokuapp.com/deleteaccount";
         server.delete($rootScope._id, url);
         $(".container").fadeOut();
         $('.logoutScreen').fadeOut();
@@ -212,7 +212,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.checkEmailFields = () => {
-    const url = "https://letsbuildyourwebsite.herokuapp.com:3000/email";
+    const url = "https://letsbuildyourwebsite.herokuapp.com/email";
     const userName = $('#userName').val();
     const userEmail = $('#userEmail').val();
     const userSubject = $('#userSubject').val();
@@ -239,7 +239,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.checkTextFields = () => {
-    const url = "https://letsbuildyourwebsite.herokuapp.com:3000/text";
+    const url = "https://letsbuildyourwebsite.herokuapp.com/text";
     const userName = $('#userNameText').val();
     const userNumber = $('#userNumberText').val();
     const userMessage = $('#userMessageText').val();
@@ -276,12 +276,12 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     if($rootScope.onAuthPage && enterPressed){
       if($rootScope.onSignInPage){
         if(usernameNotEmpty && passwordNotEmpty){
-          const url = "https://letsbuildyourwebsite.herokuapp.com:3000/login";
+          const url = "https://letsbuildyourwebsite.herokuapp.com/login";
           server.loginRequest(username, password, url);
         }
       } else {
         if(firstnameNotEmpty && lastnameNotEmpty && usernameNotEmpty && passwordNotEmpty){
-          const url = "https://letsbuildyourwebsite.herokuapp.com:3000/register";
+          const url = "https://letsbuildyourwebsite.herokuapp.com/register";
           server.register(username, password, firstname, lastname, url);
         }
       }
@@ -551,14 +551,14 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
   this.signUpEnterBtn = () => {
     const isSignUp  = $('.page1 form').hasClass('signUpForm');
     if(isSignUp){
-      const url = "https://letsbuildyourwebsite.herokuapp.com:3000/register";
+      const url = "https://letsbuildyourwebsite.herokuapp.com/register";
       const firstname = $('#firstname').val();
       const lastname = $('#lastname').val();
       const username = $('#username').val();
       const password = $('#password').val();
       server.register(username, password, firstname, lastname, url);
     } else {
-      const url = "https://letsbuildyourwebsite.herokuapp.com:3000/login";
+      const url = "https://letsbuildyourwebsite.herokuapp.com/login";
       const username = $('#username').val();
       const password = $('#password').val();
       server.loginRequest(username, password, url);
