@@ -1,20 +1,44 @@
+/*version 1.0*/
+
 body, html {
-  background-color: #222;
+  background-color: #000;
+  background-image: url('../images/ios-linen.png');
+  /*background-image: url('../images/ios-linen2.jpg');*/
   font-family: 'Roboto', sans-serif;
   margin: 0;
   padding: 0;
 }
 
+/*.backgroundImg {
+  background-image: url('../images/ios-linen2.jpg');
+  height: 100vh;
+  width: 100vw;
+  opacity: 0.5;
+  position: absolute;
+}*/
+
 .container {
-  background-color: #222;
+  /*background-color: #222;*/
+  display: none;
   flex-direction: column;
   width: 100vw;
+  z-index: 1;
 }
 
 .flex {
   align-items: center;
   display: flex;
   justify-content: center;
+}
+
+.higher {
+  z-index: 2;
+}
+
+.float {
+  -moz-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
 }
 
 .alignSelfStart {
@@ -76,9 +100,11 @@ textarea {
 
 .page4 {
   height: 60vh;
+  overflow: hidden;
 }
 
 .page4bottom {
+  background-color: #000;
   height: 20vh;
 }
 
@@ -88,14 +114,14 @@ textarea {
 }
 
 .page2 {
-  background-color: #f6f6f6;
+  /*background-color: #f6f6f6;*/
   flex-direction: column;
   position: relative;
   top: 100vh;
 }
 
 .page3 {
-  background-color: #333;
+  /*background-color: #333;*/
 }
 
 .page1left,
@@ -196,7 +222,7 @@ textarea {
   background-color: #111;
   border: 2px solid #787878;
   border-radius: 10em;
-  color: #444;
+  color: #333;
   height: 2em;
   margin-bottom: 0.8em;
   margin-left: 0.8em;
@@ -234,7 +260,7 @@ textarea {
 }
 
 .nav-circle {
-  background-color: #444;
+  background-color: #333;
   border-radius: 10em;
   color: #ec7979;
   height: 2.6em;
@@ -264,6 +290,19 @@ textarea {
   width: 3em;
 }
 
+.side-nav-circles {
+  flex-direction: column;
+  height: 14em;
+  justify-content: space-around;
+  left: 2em;
+  margin: 0 0.5em;
+  opacity: 0;
+  position: fixed;
+  top: 7em;
+  transition: opacity 0.5s;
+  width: 3em;
+}
+
 .nav-circle.four p {
   font-size: 1.8em;
 }
@@ -285,7 +324,7 @@ textarea {
 
 .nav-circle.six {
   align-items: flex-start;
-  border-radius: 0;
+  border-radius: 10%;
   flex-direction: column;
   height: 5em;
   left: 90vw;
@@ -311,9 +350,36 @@ textarea {
   margin-left: 1em;
 }
 
-.pogoutScreen,
+.nav-circles.one {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles.two {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles.three {
+  border-radius: 50%;
+  height: 3em;
+  width: 3em;
+}
+
+.nav-circles p {
+  font-size: 1.2em;
+}
+
+.sideHighlight {
+  background-color: #111;
+}
+
+.logoutScreen,
 .deleteScreen {
   background-color: #222;
+  background-image: url('../images/ios-linen.png');
   color: #fff;
   font-size: 5em;
   font-weight: 900;
@@ -369,7 +435,7 @@ textarea {
 
 .slide-left,
 .slide-right {
-  background-color: #444;
+  background-color: #333;
   border: 2px solid #787878;
   border-radius: 10em;
   color: #787878;
@@ -399,6 +465,17 @@ textarea {
 
 .page2top {
   height: 40%;
+  position: relative;
+}
+
+.pinkbackground {
+  background-color: #ec7979;
+  height: 100%;
+  left: 0;
+  opacity: 0.05;
+  position: absolute;
+  top: 0;
+  width: 100%;
 }
 
 .page2top2,
@@ -417,6 +494,7 @@ textarea {
   background-image: url(../images/start.jpg);
   background-size: 100% 100%;
   height: 100%;
+  opacity: 0.8;
   width: 100%;
 }
 
@@ -442,11 +520,13 @@ textarea {
 .top-content h1 {
   color: #555;
   color: #ec7979;
+  color: #f6f6f6;
   font-size: 1em;
 }
 
 .top-content p {
   color: #555;
+  color: #aaa;
   line-height: 1.6;
   width: 92%;
 }
@@ -465,10 +545,11 @@ textarea {
   width: 20em;
 }
 
-.cost:hover {
+/*.cost:hover {
+  box-shadow: 0px 72px 80px -22px rgba(0,0,0,0.75);
   position: relative;
   top: -2em;
-}
+}*/
 
 .cost-top {
   justify-content: space-between;
@@ -505,9 +586,68 @@ ul li {
 /*                  PAGE 4                 */
 
 .page4 {
-  background-color: #f6f6f6;
+  /*background-color: #f6f6f6;*/
   flex-direction: column;
+  flex-wrap: wrap;
+  position: relative;
 }
+
+.page4top {
+
+}
+
+.page4leftside,
+.page4middle,
+.page4rightside {
+  flex-wrap: wrap;
+  height: 100%;
+  position: relative;
+}
+
+.page4leftside {
+  left: -30%;
+  width: 30%;
+}
+
+.page4middle {
+  opacity: 0;
+  width: 40%;
+}
+
+.page4rightside {
+  align-items: flex-start;
+  height: 60%;
+  left: 30%;
+  width: 30%;
+}
+
+.floatBtn {
+  -moz-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  -webkit-box-shadow: 0px 41px 29px -20px rgba(0,0,0,0.75);
+  box-shadow: 0px 32px 29px -20px rgba(0,0,0,0.75);
+  /*box-shadow: 0px 32px 11px -20px rgba(0,0,0,0.75);*/
+}
+
+.emailbtn,
+.textbtn {
+  background-color: #111;
+  color: #ec7979;
+  height: 50%;
+  width: 100%;
+}
+
+.emailbtn h1,
+.textbtn h1 {
+  font-size: 1.1em;
+  width: 50%;
+}
+
+.topPage4 {
+  height: 32%;
+  margin: 0 !important;
+  width: 100%;
+}
+
 
 .contactHeading {
   margin-bottom: 2em;
@@ -527,8 +667,9 @@ ul li {
 .page4 form input,
 .page4 form textarea {
   background-color: #222;
+  background-color: #111;
   border: none;
-  border-radius: 0.2em;
+  /*border-radius: 0.2em;*/
   color: #fff;
   font-size: 1.4em;
   line-height: 1.4;
@@ -538,12 +679,21 @@ ul li {
   width: 100%;
 }
 
+.page4 form input {
+  color: #ec7979;
+  margin: 0;
+}
+
 html body .container .page4 form textarea {
   background-color: #f6f6f6;
   border: 2px solid #222;
   color: #222;
   height: 4em;
   transition: background-color 0.5s ease;
+}
+
+.forms {
+  flex-wrap: wrap;
 }
 
 .form-head,
@@ -555,6 +705,7 @@ html body .container .page4 form textarea {
 .send-btn,
 .send-text-btn {
   background-color: #222;
+  background-color: #111;
   border-radius: 0.2em;
   color: #f6f6f6;
   font-size: 1.4em;
@@ -567,7 +718,7 @@ html body .container .page4 form textarea {
 
 .send-btn:active,
 .send-text-btn:active {
-  background-color: #444;
+  background-color: #333;
 }
 
 .emailSent {
@@ -661,10 +812,10 @@ html body .container .page4 form textarea {
 }
 
 .deviceOne, .deviceTwo, .deviceThree, .deviceFour, .test, .centerDevice {
-  background-color: #222;
+  /*background-color: #222;*/
   background-repeat: no-repeat;
   background-size: auto 77%;
-  border-radius: 50%;
+  /*border-radius: 50%;*/
   height: 50%;
   left: 25%;
   position: absolute;
@@ -674,6 +825,7 @@ html body .container .page4 form textarea {
 
 .centerDevice {
   background-color: #ec7979;
+  border-radius: 50%;
 }
 
 .centerDevice {
@@ -762,6 +914,8 @@ html body .container .page4 form textarea {
 .pacman-top{
   animation: turn1 0.5s infinite linear;
   background-color: #222;
+  background-color: #111;
+  background-color: #000;
   border-radius:50em 50em 0 0;
   height: 4em;
   width: 8em;
@@ -770,6 +924,8 @@ html body .container .page4 form textarea {
 .pacman-bottom{
   animation: turn2 0.5s infinite linear;
   background-color:#222;
+  background-color: #111;
+  background-color: #000;
   border-radius:0 0 50em 50em;
   height: 4em;
   width: 8em;
@@ -799,9 +955,11 @@ html body .container .page4 form textarea {
 
 .money {
   background-color: #222;
+  background-color: #000;
   border-radius: 0.4em;
   box-shadow: 1px 28px 43px -17px rgba(0,0,0,0.75);
   color: #00cc44;
+  color: #1f9b91;
   height: 9em;
   opacity: 0;
   overflow: hidden;
@@ -874,8 +1032,8 @@ grammarly-btn {
     margin-top: 2em;
   }
   .page2top {
-    height: 100%;
     flex-direction: column;
+    height: 100%;
   }
   .top-content {
     width: 50%;
