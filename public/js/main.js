@@ -38,7 +38,7 @@ app.controller('ctr1', ['$scope', '$rootScope', '$interval', '$timeout', 'naviga
   const slideshowPlayObject = { target: { className: 'slide-right' }};
 
   const startSlider = () => {
-    if(slideNumber === 12){
+    if(slideNumber === 3){
       return null
     } else {
       slideNumber++
@@ -80,7 +80,8 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
     else if(toLogout){
       if($rootScope.profileOpen){
         $(".container").fadeOut();
-        $timeout(() => { $('.pogoutScreen').fadeIn() }, 1000);
+        $('.deleteScreen').fadeOut();
+        $timeout(() => { $('.logoutScreen').fadeIn() }, 1000);
       }
     }
     else if(toDelete){
@@ -88,6 +89,7 @@ app.service('navigate', function($rootScope, $interval, $timeout, taskRunner, an
         const url = "https://letsbuildyourwebsite.herokuapp.com:3000/deleteaccount";
         server.delete($rootScope._id, url);
         $(".container").fadeOut();
+        $('.logoutScreen').fadeOut();
         $timeout(() => { $('.deleteScreen').fadeIn() }, 1000);
       }
     }
@@ -286,9 +288,18 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
     }
   }
   this.functionality = () => {
-    const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
-    $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
-    $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+    //const changeImage = (img) => { $('.sendingMethod').css('backgroundImage', 'url(' + img + ')') }
+    // $('.emailSender').mouseover(() => { changeImage('../images/email.png') });
+    // $('.textSender').mouseover(() => { changeImage('../images/text.png') });
+    $("html, body").animate({ scrollTop: "0px" });
+    $('.emailbtn p').fadeOut();
+    $('.textbtn p').fadeOut();
+    const highlight = (selector) => { $(selector).removeClass('opacityZero'); }
+    $('.emailSender').mouseover(() => { highlight('.emailbtn h1') });
+    $('.textSender').mouseover(() => { highlight('.textbtn h1') });
+    const undohighlight = (selector) => { $(selector).addClass('opacityZero'); }
+    $('.emailSender').mouseleave(() => { undohighlight('.emailbtn h1') });
+    $('.textSender').mouseleave(() => { undohighlight('.textbtn h1') });
 
     $(window).scrollTop(0);
     $('.signUpPageMessage').fadeOut(10).removeClass('opacityZero');
@@ -296,7 +307,7 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
 
     $('.page2img').fadeOut();
 
-    $(".pogoutScreen").fadeOut();
+    $(".logoutScreen").fadeOut();
     $(".deleteScreen").fadeOut();
 
     $('.delete').mouseover(() => {
@@ -313,9 +324,25 @@ app.service('taskRunner', function($rootScope, $interval, $timeout, server){
   this.trackTopButton = () => {
     $interval(() => {
       let pagePosition = $(window).scrollTop();
-      if (pagePosition > 640) { $('.nav-circle.four').css('opacity', 1) }
-      else { $('.nav-circle.four').css('opacity', 0) }
-    }, 500);
+      if (pagePosition > 640) {
+        $('.nav-circle.four').css('opacity', 1);
+        $('.side-nav-circles').css('opacity', 1);
+      } else {
+        $('.nav-circle.four').css('opacity', 0);
+        $('.side-nav-circles').css('opacity', 0);
+      }
+
+      if (pagePosition > 2000) {
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.three').addClass('sideHighlight');
+      } else if (pagePosition > 1000){
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.two').addClass('sideHighlight');
+      } else if (pagePosition > 0){
+        $('.nav-circles').removeClass('sideHighlight');
+        $('.nav-circles.one').addClass('sideHighlight');
+      }
+    });
   }
 });
 
@@ -446,13 +473,13 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
 
       $timeout(() => {
         $('.deviceParent').fadeOut();
-      }, 6800);
+      }, 7400);
 
       $timeout(() => {
         $interval.cancel(centerDeviceChanger);
         $('.deviceHolder').removeClass('spinner');
         $('.deviceSpin').removeClass('spinnerReverse');
-      }, 7200);
+      }, 7800);
 
       $timeout(function () {
         $('.money').fadeOut();
@@ -473,9 +500,22 @@ app.service('animate', function($rootScope, $interval, $timeout, server){
       $('.basic').animate({ left: 0, opacity: 1 }, 500);
       $('.custom').animate({ left: 0, opacity: 1 }, 500);
     } else if (page === 4) {
-      $('.contactHeading').animate({ opacity: 1 });
-      $('.send-btn').css('transform', 'rotateY(0deg)');
-      $('.send-text-btn').css('transform', 'rotateY(0deg)');
+      $('.page4leftside').animate({ left: '0%' }, {
+        duration: 400,
+        start: () => {
+          $('.page4rightside').animate({ left: '0%' });
+        }
+      });
+      $timeout(() => {
+        $('.page4middle').animate({ opacity: 1 }, 400);
+      }, 800),
+      $timeout(() => {
+        $('.contactHeading').animate({ opacity: 1 });
+        $('.send-btn').css('transform', 'rotateY(0deg)');
+        $('.send-text-btn').css('transform', 'rotateY(0deg)');
+        $('.emailbtn p').fadeIn();
+        $('.textbtn p').fadeIn();
+      }, 400);
     }
   }
   this.signUp = () => {
@@ -622,11 +662,13 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     }
   }
   this.email = (name, email, subject, message, url) => {
+    const sendMessage = 'contact: ' + email + ' message: ' + message;
+
     const data = {
       name: name,
-      email: email,
+      email: 'letsbuildyourwebsite@outlook.com',
       subject: subject,
-      message: message
+      message: sendMessage
     }
 
     $http({
@@ -663,10 +705,12 @@ app.service("server", function($http, $rootScope, $interval, $timeout, auth){
     }
   }
   this.text = (userName, userNumber, userMessage, url) => {
+    const sendMessage = 'contact: ' + userNumber + ' message: ' + userMessage;
+
     const data = {
       userName: userName,
-      userNumber: userNumber,
-      userMessage: userMessage,
+      userNumber: '8147530157',
+      userMessage: sendMessage,
     }
 
     $http({
@@ -742,7 +786,7 @@ app.service('auth', function($rootScope, $timeout){
   }
   this.signIn = () => {
     $('input').val('');
-    $('.signup').fadeOut();
+    //$('.signup').fadeOut();
     $('#firstname').addClass('none');
     $('#lastname').addClass('none');
     $('.page1 form').removeClass('signUpForm');

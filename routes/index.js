@@ -101,7 +101,7 @@ router.post('/email', (req, res, next) => {
   const subject = req.body.subject;
   const message = req.body.message;
   const name = req.body.name;
-  const to = 'ijh5005@outlook.com';
+  const to = 'letsbuildyourwebsite@outlook.com';
 
   var transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -113,7 +113,7 @@ router.post('/email', (req, res, next) => {
 
   var mailOptions = {
     from: email,
-    to: 'ijh5005@outlook.com',
+    to: to,
     subject: subject,
     text: message
   };
